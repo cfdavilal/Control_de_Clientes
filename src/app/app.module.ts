@@ -12,6 +12,12 @@ import { RegistroComponent } from './components/registro/registro.component';
 import { ConfiguracionComponent } from './components/configuracion/configuracion.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuth, AngularFireAuthModule} from '@angular/fire/auth'
+import { environment } from 'src/environments/environment';
+import { AngularFirestoreModule} from '@angular/fire/firestore';
+import { FlashMessagesModule } from 'angular2-flash-messages';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,7 +34,12 @@ import { FooterComponent } from './components/footer/footer.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firestore, 'control-clientes'),
+    AngularFirestoreModule,
+    AngularFireAuth,
+    FlashMessagesModule.forRoot()
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
