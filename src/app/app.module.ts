@@ -13,11 +13,12 @@ import { ConfiguracionComponent } from './components/configuracion/configuracion
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuth, AngularFireAuthModule} from '@angular/fire/auth'
+import { AngularFireAuthModule} from '@angular/fire/auth'
 import { environment } from 'src/environments/environment';
 import { AngularFirestoreModule} from '@angular/fire/firestore';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { FormsModule } from '@angular/forms';
+import { ClienteServicio } from './servicios/cliente.service';
 
 @NgModule({
   declarations: [
@@ -37,11 +38,11 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firestore, 'control-clientes'),
     AngularFirestoreModule,
-    AngularFireAuth,
-    FlashMessagesModule.forRoot()
-    
+    AngularFireAuthModule,
+    FlashMessagesModule.forRoot(),
+    FormsModule
   ],
-  providers: [],
+  providers: [ClienteServicio],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
