@@ -20,6 +20,7 @@ import { FlashMessagesModule } from 'angular2-flash-messages';
 import { FormsModule } from '@angular/forms';
 import { ClienteServicio } from './servicios/cliente.service';
 import { LoginService } from './servicios/login.service';
+import { AuthGuard } from './guardianes/auth.guard';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,7 @@ import { LoginService } from './servicios/login.service';
     FlashMessagesModule.forRoot(),
     FormsModule
   ],
-  providers: [ClienteServicio, LoginService],
+  providers: [ClienteServicio, LoginService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
