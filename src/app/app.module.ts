@@ -13,14 +13,15 @@ import { ConfiguracionComponent } from './components/configuracion/configuracion
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuthModule} from '@angular/fire/auth'
+import { AngularFireAuthModule, SETTINGS } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
-import { AngularFirestoreModule} from '@angular/fire/firestore';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { FormsModule } from '@angular/forms';
 import { ClienteServicio } from './servicios/cliente.service';
 import { LoginService } from './servicios/login.service';
 import { AuthGuard } from './guardianes/auth.guard';
+import { ConfiguracionService } from './servicios/configuracion.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { AuthGuard } from './guardianes/auth.guard';
     RegistroComponent,
     ConfiguracionComponent,
     NotFoundComponent,
-    FooterComponent
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,9 +43,13 @@ import { AuthGuard } from './guardianes/auth.guard';
     AngularFirestoreModule,
     AngularFireAuthModule,
     FlashMessagesModule.forRoot(),
-    FormsModule
+    FormsModule,
   ],
-  providers: [ClienteServicio, LoginService, AuthGuard],
-  bootstrap: [AppComponent]
+  providers: [ClienteServicio,
+              LoginService,
+              AuthGuard,
+              ConfiguracionService,
+              { provide: SETTINGS, useValue:{} }],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
