@@ -87,16 +87,19 @@
 
 <!-- Modal Agregar Clientes -->
 <div class="modal fade" id="agregarClienteModal">
-  <div class="modal-dialog modl-lg">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div>
         <div class="modal-header bg-info text-white">
           <h5 class="modal-title">Agregar Cliente</h5>
-          <button class="close" data-bs-dismiss="modal">
+          <button class="close" data-bs-dismiss="modal" #botonCerrar>
             <i class="fa fa-window-close" aria-hidden="true"></i>
           </button>
         </div>
-        <form>
+
+        <flash-messages></flash-messages>
+
+        <form #clienteForm="ngForm" (ngSubmit)="agregar(clienteForm)">
           <div class="modal-body">
             <div class="input-group mt-3">
               <span class="input-group-text" id="ig-nombre"
@@ -107,7 +110,18 @@
                 type="text"
                 name="nombre"
                 placeholder="Nombre del Cliente"
+                #nombre='ngModel'
+                [(ngModel)]="cliente.nombre"
+                [ngClass]="{'is-invalid': nombre.errors && nombre.touched}"
+                required
+                minlength="2"
               />
+              <div [hidden]="!nombre.errors?.required" class="invalid-feedback">
+                Nombre requerido
+              </div>
+              <div [hidden]="!nombre.errors?.minlength" class="invalid-feedback">
+                Debe contener al menos 2 caracteres
+              </div>
             </div>
             <div class="input-group mt-3">
               <span class="input-group-text" id="ig-apellido"
@@ -118,7 +132,18 @@
                 type="text"
                 name="apellido"
                 placeholder="Apellido del Cliente"
+                #apellido='ngModel'
+                [(ngModel)]="cliente.apellido"
+                [ngClass]="{'is-invalid': apellido.errors && apellido.touched}"
+                required
+                minlength="2"
               />
+              <div [hidden]="!apellido.errors?.required" class="invalid-feedback">
+                Apellido requerido
+              </div>
+              <div [hidden]="!apellido.errors?.minlength" class="invalid-feedback">
+                Debe contener al menos 2 caracteres
+              </div>
             </div>
             <div class="input-group mt-3">
               <span class="input-group-text" id="ig-email"
@@ -129,7 +154,19 @@
                 type="email"
                 name="email"
                 placeholder="Correo del Cliente"
+                #email='ngModel'
+                [(ngModel)]="cliente.email"
+                [ngClass]="{'is-invalid': email.errors && email.touched}"
+                required
+                minlength="2"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
               />
+              <div [hidden]="!email.errors?.required" class="invalid-feedback">
+                E-mail requerido
+              </div>
+              <div [hidden]="!email.errors?.pattern" class="invalid-feedback">
+                E-mail no es valido
+              </div>
             </div>
             <div class="input-group mt-3">
               <span class="input-group-text" id="ig-saldo"
@@ -140,7 +177,14 @@
                 type="number"
                 name="saldo"
                 placeholder="Saldo del Cliente"
+                #saldo='ngModel'
+                [(ngModel)]="cliente.saldo"
+                [ngClass]="{'is-invalid': saldo.errors && saldo.touched}"
+                required
               />
+              <div [hidden]="!saldo.errors?.required" class="invalid-feedback">
+                Saldo requerido
+              </div>
             </div>
           </div>
           <div class="modal-footer">
