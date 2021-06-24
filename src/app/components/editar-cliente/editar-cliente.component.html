@@ -1,1 +1,163 @@
-<p>editar-cliente works!</p>
+<header id="main-header" class="py-2 bg-info text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1><i class="fas fa-user"></i> Editar Cliente</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<form #clienteForm="ngForm" (ngSubmit)="guardar(clienteForm)">
+  <flash-messages></flash-messages>
+  <!-- Botones -->
+  <section id="actions" class="py-4 mb-4 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <a routerLink="/" class="btn btn-secondary btn-block">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar al
+            inicio</a
+          >
+        </div>
+        <div class="col-md-3">
+          <button type="submit" class="btn btn-success btn-block">
+            <i class="fa fa-check" aria-hidden="true"></i> Guardar Cliente
+          </button>
+        </div>
+        <div class="col-md-3">
+          <a
+            routerLink="/"
+            class="btn btn-danger btn-block"
+            (click)="eliminar()"
+          >
+            <i class="fa fa-trash" aria-hidden="true"></i> Eliminar al
+            cliente</a
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="detalles">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              <h4>Editar Cliente</h4>
+            </div>
+            <div class="card-body">
+              <div class="input-group mt-3">
+                <span class="input-group-text" id="ig-nombre"
+                  ><i class="fas fa-user"></i>Nombre</span
+                >
+                <input
+                  class="form-control"
+                  type="text"
+                  name="nombre"
+                  placeholder="Nombre del Cliente"
+                  #nombre="ngModel"
+                  [(ngModel)]="cliente.nombre"
+                  [ngClass]="{ 'is-invalid': nombre.errors && nombre.touched }"
+                  required
+                  minlength="2"
+                />
+                <div
+                  [hidden]="!nombre.errors?.required"
+                  class="invalid-feedback"
+                >
+                  Nombre requerido
+                </div>
+                <div
+                  [hidden]="!nombre.errors?.minlength"
+                  class="invalid-feedback"
+                >
+                  Debe contener al menos 2 caracteres
+                </div>
+              </div>
+              <div class="input-group mt-3">
+                <span class="input-group-text" id="ig-apellido"
+                  ><i class="fas fa-user"></i>Apellido</span
+                >
+                <input
+                  class="form-control"
+                  type="text"
+                  name="apellido"
+                  placeholder="Apellido del Cliente"
+                  #apellido="ngModel"
+                  [(ngModel)]="cliente.apellido"
+                  [ngClass]="{
+                    'is-invalid': apellido.errors && apellido.touched
+                  }"
+                  required
+                  minlength="2"
+                />
+                <div
+                  [hidden]="!apellido.errors?.required"
+                  class="invalid-feedback"
+                >
+                  Apellido requerido
+                </div>
+                <div
+                  [hidden]="!apellido.errors?.minlength"
+                  class="invalid-feedback"
+                >
+                  Debe contener al menos 2 caracteres
+                </div>
+              </div>
+              <div class="input-group mt-3">
+                <span class="input-group-text" id="ig-email"
+                  ><i class="fa fa-envelope" aria-hidden="true"></i>
+                  E-mail</span
+                >
+                <input
+                  class="form-control"
+                  type="email"
+                  name="email"
+                  placeholder="Correo del Cliente"
+                  #email="ngModel"
+                  [(ngModel)]="cliente.email"
+                  [ngClass]="{ 'is-invalid': email.errors && email.touched }"
+                  required
+                  minlength="2"
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                />
+                <div
+                  [hidden]="!email.errors?.required"
+                  class="invalid-feedback"
+                >
+                  E-mail requerido
+                </div>
+                <div [hidden]="!email.errors?.pattern" class="invalid-feedback">
+                  E-mail no es valido
+                </div>
+              </div>
+              <div class="input-group mt-3">
+                <span class="input-group-text" id="ig-saldo"
+                  ><i class="fa fa-money" aria-hidden="true"></i> Saldo</span
+                >
+                <input
+                  class="form-control"
+                  type="number"
+                  name="saldo"
+                  placeholder="Saldo del Cliente"
+                  #saldo="ngModel"
+                  [(ngModel)]="cliente.saldo"
+                  [ngClass]="{ 'is-invalid': saldo.errors && saldo.touched }"
+                  required
+                />
+                <div
+                  [hidden]="!saldo.errors?.required"
+                  class="invalid-feedback"
+                >
+                  Saldo requerido
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</form>
