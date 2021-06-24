@@ -1,5 +1,8 @@
+import { ClassField } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Configuracion } from 'src/app/modelos/configuracion.model';
+import { ConfiguracionService } from 'src/app/servicios/configuracion.service';
 import { LoginService } from 'src/app/servicios/login.service';
 
 @Component({
@@ -10,22 +13,31 @@ import { LoginService } from 'src/app/servicios/login.service';
 export class HeaderComponent implements OnInit {
   isLoggedIn: boolean;
   loggedInUser: string;
-  constructor(private loginService: LoginService, private router: Router) {}
+  permitirRegistro: boolean;
+  constructor(
+    private loginService: LoginService,
+    private router: Router,
+    private configuracionService: ConfiguracionService
+  ) {}
 
   ngOnInit(): void {
-    this.loginService.getAuth().subscribe( auth => {
+    this.loginService.getAuth().subscribe((auth) => {
       if (auth) {
         this.isLoggedIn = true;
-        this.loggedInUser = String(auth.email)
-      }else{
-        this.isLoggedIn = false
+        this.loggedInUser = String(auth.email);
+      } else {
+        this.isLoggedIn = false;
       }
     });
+
+    this.configuracionService.getConfiguracion().subscribe((configuracion: Configuracion)=>{
+      this.permitirRegistro = configuracion.permitirRegistro as boolean
+    })
   }
 
-  logout(){
-    this.loginService.logout()
-    this.isLoggedIn = false
-    this.router.navigate(['/login'])
+  logout() {
+    this.loginService.logout();
+    this.isLoggedIn = false;
+    this.router.navigate(['/login']);
   }
 }
