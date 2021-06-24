@@ -6,7 +6,7 @@ import {
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Cliente } from '../modelos/cliente.model';
-import { map} from 'rxjs/operators'
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class ClienteServicio {
@@ -20,30 +20,48 @@ export class ClienteServicio {
       ref.orderBy('nombre', 'asc')
     );
   }
-  
-  getClientes(): Observable<Cliente[]>{
+
+  getClientes(): Observable<Cliente[]> {
     //obtener todos los clientes
     this.clientes = this.clientesColeccion.snapshotChanges().pipe(
-        map( cambios=>{
-            return cambios.map(accion=>{
-                const datos = accion.payload.doc.data() as Cliente
-                datos.id =accion.payload.doc.id
-                return datos
-            })
-        })
-    )
-    return this.clientes
+      map((cambios) => {
+        return cambios.map((accion) => {
+          const datos = accion.payload.doc.data() as Cliente;
+          datos.id = accion.payload.doc.id;
+          return datos;
+        });
+      })
+    );
+    return this.clientes;
   }
 
-  agregarCliente(cliente: Cliente){
-    this.clientesColeccion.add(cliente)
+  getCliente(id: string): Observable<Cliente> {
+    this.clienteDoc = this.db.doc<Cliente>(`clientes/${id}`);
+
+    return (this.cliente = this.clienteDoc.snapshotChanges().pipe(
+      map((accion) => {
+        if (accion.payload.exists === false) {
+          return null;
+        } else {
+          const datos = accion.payload.data() as Cliente;
+          datos.id = accion.payload.id;
+          return datos as any;
+        }
+      })
+    ));
   }
 
-  editarCliente(){
-
+  agregarCliente(cliente: Cliente) {
+    this.clientesColeccion.add(cliente);
   }
 
-  eliminarCliente(){
+  modificarCliente(cliente: Cliente) {
+    this.clienteDoc = this.db.doc(`clientes/${cliente.id}`)
+    this.clienteDoc.update(cliente)
+  }
 
+  eliminarCliente(cliente: Cliente) {
+    this.clienteDoc = this.db.doc(`clientes/${cliente.id}`)
+    this.clienteDoc.delete()
   }
 }
