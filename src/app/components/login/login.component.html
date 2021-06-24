@@ -1,1 +1,64 @@
-<p>login works!</p>
+<header id="main-header" class="py-2 bg-info text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1><i class="fas fa-user"></i> Login</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<flash-messages></flash-messages>
+
+<section id="login">
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <div class="card">
+          <div class="card-header">
+            <h4>Login</h4>
+          </div>
+          <div class="card-body">
+            <form (submit)="login()">
+              <div class="input-group">
+                <span class="input-group-text" id="ig-email"
+                  ><i class="fa fa-envelope" aria-hidden="true"></i>
+                  E-mail</span
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  name="email"
+                  placeholder="E-mail"
+                  ([ngModel])="email"
+                  required
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                  #emailInput
+                />
+              </div>
+              <div class="input-group mt-3">
+                <span class="input-group-text" id="ig-password"
+                  ><i class="fa fa-key" aria-hidden="true"></i> Password</span
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  name="password"
+                  placeholder="Password"
+                  ([ngModel])="(password)"
+                  required
+                  #passwordInput
+                />
+              </div>
+              <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary full-width mt-3"
+                  ><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button
+                >
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
